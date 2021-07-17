@@ -1,0 +1,16 @@
+name: Build
+
+on: 
+  # Triggers the workflow on push/pull request or when new release outs events but only for the main branch
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: docker:dind
+    steps:
+      - name: "Step 1: Checkout"
+        uses: actions/checkout@v2
+      
