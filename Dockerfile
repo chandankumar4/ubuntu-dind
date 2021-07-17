@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
 # Let's start with some basic stuff.
-RUN apt-get update -qq && apt-get install -qqy \
+RUN apt-get update -y && apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
