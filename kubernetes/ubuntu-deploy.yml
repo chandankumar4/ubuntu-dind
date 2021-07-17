@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu-dev
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu-dev
+  template:
+    metadata:
+      labels:
+        app: ubuntu-dev
+    spec:
+      containers:
+      - command:
+        - /bin/sleep
+        - 3650d
+        env:
+        - name: DOCKER_HOST
+          value: tcp://localhost:2375
+        image: chandankumar4/ubuntu:dind
+        imagePullPolicy: Always
+        name: ubuntu
+        securityContext:
+          privileged: true
+      - image: docker:1.12.6-dind
+        imagePullPolicy: IfNotPresent
+        name: dind-daemon
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /var/lib/docker
+          name: docker-graph-storage
+      volumes:
+      - emptyDir: {}
+        name: docker-graph-storage
